@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'app/theme/app_theme.dart';
 import 'app/theme/app_colors.dart';
 import 'app/theme/app_typography.dart';
 import 'app/theme/app_spacing.dart';
+import 'features/qr_scanner/presentation/pages/qr_scanner_page.dart';
 
 void main() {
-  runApp(const SmartHotelApp());
+  runApp(const ProviderScope(child: SmartHotelApp()));
 }
 
 class SmartHotelApp extends StatelessWidget {
@@ -22,8 +24,7 @@ class SmartHotelApp extends StatelessWidget {
   }
 }
 
-/// TEMPORARY screen — proves the design system renders correctly.
-/// This gets deleted once we build the real Splash screen in the next phase.
+/// TEMPORARY screen — replaced by the real Splash/Welcome flow later.
 class _DesignSystemPreview extends StatelessWidget {
   const _DesignSystemPreview();
 
@@ -37,18 +38,19 @@ class _DesignSystemPreview extends StatelessWidget {
           children: [
             Text('Heading H1', style: AppTypography.h1),
             const SizedBox(height: AppSpacing.sm),
-            Text('Heading H2', style: AppTypography.h2),
-            const SizedBox(height: AppSpacing.sm),
             Text('Body text example', style: AppTypography.bodyLarge),
             const SizedBox(height: AppSpacing.sm),
             Text('₹240', style: AppTypography.price),
             const SizedBox(height: AppSpacing.lg),
-            ElevatedButton(onPressed: () {}, child: const Text('Add to Cart')),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const QrScannerPage()),
+                );
+              },
+              child: const Text('Scan Table QR'),
+            ),
             const SizedBox(height: AppSpacing.sm),
-            OutlinedButton(onPressed: () {}, child: const Text('Cancel')),
-            const SizedBox(height: AppSpacing.sm),
-            TextButton(onPressed: () {}, child: const Text('View all')),
-            const SizedBox(height: AppSpacing.lg),
             Container(
               padding: const EdgeInsets.all(AppSpacing.cardPadding),
               decoration: BoxDecoration(
